@@ -4,10 +4,15 @@
 int * merge(int *a1,int len1,int *a2,int len2);
 int * mergeSort(int *a,int len);
 
+void quickSort(int *a,int len);
+void partition(int *a, int pivotIndex,int len);
+
+
 // Test data for main
 int size = 10;
 int a[10] = {4,5,6,8,9,2,3,4,5,6};
 
+//**************************Merge Sort*******************************//
 /**
 * Merges two sorted arrays
 */
@@ -53,8 +58,7 @@ int * merge(int *a1,int len1,int *a2,int len2){
 /**
 * Merge sort
 */
-int * mergeSort(int *a,int len){ 
-     printf("Len:%d \n",len);    
+int * mergeSort(int *a,int len){          
      if(len <=1){
        return a;
      }     
@@ -64,12 +68,76 @@ int * mergeSort(int *a,int len){
      return merge(firstHalf,middle,secondHalf,len-middle);
 }
 
-void main(void){
-   int * r;
-   r = mergeSort(a,size); 
+//****************************Quick Sort **********************************//
+
+void partition(int *a,int pivotIndex, int len){
+    int i = 0;
+	int pivotValue = a[pivotIndex];
+	int less=0;
+	while(i<len){
+	  if(a[i]<=pivotValue){
+			less++;
+	    }	
+	   i++;
+	}	
+	int tmp = a[less-1];
+	a[less-1] = a[pivotIndex];
+	a[pivotIndex] = tmp;	
+    
+	int greater = len-less;
+	i= 0;
+	int offset =0;
+	while(i<len && greater>0){
+		if(a[i]>pivotValue){
+			int tmp = a[i];
+			a[i]= a[less+offset];
+			a[less+offset] = tmp;
+			greater--;
+			offset++;
+			i--;
+		}
+        i++;		
+	}	
+	
+}
+
+
+void quickSort(int *a,int len){     
+	 
+	if(len<=1){
+		return;
+	}
+	int pivotIndex = (len+1)/2;	
+	printf("PivotIndex=%d PivotValue=%d\n",pivotIndex,a[pivotIndex]);
+	partition(a,pivotIndex,len);	
+	int i=0;  
+     while(i<len){    
+     printf("%d,",a[i]);
+     i++;
+     }
+    printf("\n");	 
+	quickSort(a,pivotIndex);
+    quickSort(&a[pivotIndex],len-pivotIndex);        
+}
+
+void main(void){   
+   quickSort(a,size);
    int i=0;  
+   printf("Half Sorted\n");
+   while(i<size){    
+     printf("%d,",a[i]);
+     i++;
+   }
+   
+   /**
+   printf("\nFull Sorted\n");
+   
+   int * r;
+   r = merge(a,size-2,&a[(sise-2],2); 
+   i=0;  
    while(i<size){    
      printf("%d,",r[i]);
      i++;
-   }
+   }*/
+   
 }
