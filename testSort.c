@@ -13,13 +13,16 @@ void main(void){
      printf("%d,",r[i]);
      i++;
    }*/
-   
+   /**
    halfSort(a,size);  
    int i=0;  
    printf("Half Sorted\n");
    while(i<size){    
      printf("%d,",a[i]);
      i++;
-   }
+   }*/
+   int r = findMedian(a,size);
+   printf("%d,",r);
+   
       
 }

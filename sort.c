@@ -149,15 +149,17 @@ void halfSort(int *a,int len){
 //********************* Median and Order statistics ************************//
 int findKthSmallest(int * a, int len,int k){
 	if(len<=1){
-		return 0;
+		return a[0];
 	}
-	int pivotIndex = (len+1)/2;	
-	int pivotValue = a[pivotIndex];
-	//partition(
-	
-    return 0;
-
-
+	int pivotIndex =partition(a,len-1);
+	int pivotDist= pivotIndex+1;
+	if(pivotDist ==k){
+		return a[pivotIndex];
+	}else if(k<pivotDist){
+		return findKthSmallest(a,pivotIndex,k);
+	}else{
+		return findKthSmallest(&a[pivotIndex+1],len-(pivotIndex+1),k-pivotDist);
+	}
 }
 int findMedian(int *a,int len){
 	return findKthSmallest(a,len,len/2);
