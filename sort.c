@@ -8,12 +8,12 @@ void quickSort(int *a,int len);
 int partition(int *a,int len);
 void swap(int *a,int i1,int i2);
 
-//void findKthSmallest(int * a, int len,int k);
-//void findMedian(int * a, int len);
+void sudoPartition(int *a,int pivotIndex,int len);
+void halfSort(int *a,int len);
 
-// Test data for main
-int size = 10;
-int a[10] = {4,5,6,8,11,9,3,4,5,6};
+int findKthSmallest(int * a, int len,int k);
+int findMedian(int * a, int len);
+
 
 //*******************Helpers ****************************************//
 void swap(int *a,int i1,int i2){
@@ -21,9 +21,11 @@ void swap(int *a,int i1,int i2){
 	a[i1]= a[i2];
 	a[i2] = tmp;
 }
-//**************************Merge Sort*******************************//
+//**************************Merge Sort *******************************//
 /**
 * Merges two sorted arrays
+* It runs in O(len1+len2)
+* It allocates len1+len2 extra memory
 */
 int * merge(int *a1,int len1,int *a2,int len2){
    int * merged;
@@ -66,6 +68,9 @@ int * merge(int *a1,int len1,int *a2,int len2){
 
 /**
 * Merge sort
+* An implementation of basic merge sort
+* O(nlog(n)) performance all the time
+* Takes n(log(n)) memory because of the merge allocation
 */
 int * mergeSort(int *a,int len){          
      if(len <=1){
@@ -81,9 +86,8 @@ int * mergeSort(int *a,int len){
 
 int partition(int *a,int lastIndex){
     //Move pivot to the end
-	int pivotIndex = (lastIndex+1)/2;	
-	int pivotValue = a[pivotIndex];
-	printf("PivotIndex=%d PivotValue=%d\n",pivotIndex,pivotValue);
+	int pivotIndex = (lastIndex+1)/2; // Random would be better , but just pick middle always	
+	int pivotValue = a[pivotIndex];	
 	swap(a,pivotIndex,lastIndex);
 	int storeIndex = 0;
 	for(int i =0;i<lastIndex;i++){
@@ -97,8 +101,7 @@ int partition(int *a,int lastIndex){
 }
 
 
-void quickSort(int *a,int len){     
-	 
+void quickSort(int *a,int len){  	 
 	if(len<=1){
 		return;
 	}
@@ -113,38 +116,51 @@ void quickSort(int *a,int len){
     quickSort(&a[pivotIndex+1],len-(pivotIndex+1));        
 }
 
-//********************* Median and Order statistics ************************//
-/*void findKthSmallest(int * a, int len,int k){
+//***************** Half Sort  ************************//
+/**
+* This is like quick sort parition, but it is passed the pivotIndex
+*/
+void sudoPartition(int *a,int pivotIndex, int len){    		
+	int pivotValue = a[pivotIndex];	
+	swap(a,pivotIndex,len-1);
+	int storeIndex = 0;
+	for(int i =0;i<len-1;i++){
+		if(a[i]<=pivotValue){
+			swap(a,storeIndex,i);
+			storeIndex++;
+		}
+	}
+	swap(a,len-1,storeIndex);	
+}
+
+/**
+* This is an in place "near" merge sort, only two halfs of the array are sorted
+*/
+void halfSort(int *a,int len){
 	if(len<=1){
 		return;
 	}
+	int pivotIndex = (len+1)/2;		
+	sudoPartition(a,pivotIndex,len);	 
+	halfSort(a,pivotIndex);
+    halfSort(&a[pivotIndex],len-pivotIndex);    
+}
+
+//********************* Median and Order statistics ************************//
+int findKthSmallest(int * a, int len,int k){
+	if(len<=1){
+		return 0;
+	}
 	int pivotIndex = (len+1)/2;	
 	int pivotValue = a[pivotIndex];
-	partition(
+	//partition(
 	
+    return 0;
 
 
-
-}*/
-
-void main(void){   
-   quickSort(a,size);
-   int i=0;  
-   printf("Half Sorted\n");
-   while(i<size){    
-     printf("%d,",a[i]);
-     i++;
-   }
-   
-   /**
-   printf("\nFull Sorted\n");
-   
-   int * r;
-   r = merge(a,size-2,&a[(sise-2],2); 
-   i=0;  
-   while(i<size){    
-     printf("%d,",r[i]);
-     i++;
-   }*/
-   
 }
+int findMedian(int *a,int len){
+	return findKthSmallest(a,len,len/2);
+}
+
+
