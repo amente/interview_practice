@@ -5,13 +5,22 @@ int * merge(int *a1,int len1,int *a2,int len2);
 int * mergeSort(int *a,int len);
 
 void quickSort(int *a,int len);
-void partition(int *a, int pivotIndex,int len);
+int partition(int *a,int len);
+void swap(int *a,int i1,int i2);
 
+//void findKthSmallest(int * a, int len,int k);
+//void findMedian(int * a, int len);
 
 // Test data for main
 int size = 10;
-int a[10] = {4,5,6,8,9,2,3,4,5,6};
+int a[10] = {4,5,6,8,11,9,3,4,5,6};
 
+//*******************Helpers ****************************************//
+void swap(int *a,int i1,int i2){
+	int tmp = a[i1];
+	a[i1]= a[i2];
+	a[i2] = tmp;
+}
 //**************************Merge Sort*******************************//
 /**
 * Merges two sorted arrays
@@ -70,35 +79,21 @@ int * mergeSort(int *a,int len){
 
 //****************************Quick Sort **********************************//
 
-void partition(int *a,int pivotIndex, int len){
-    int i = 0;
+int partition(int *a,int lastIndex){
+    //Move pivot to the end
+	int pivotIndex = (lastIndex+1)/2;	
 	int pivotValue = a[pivotIndex];
-	int less=0;
-	while(i<len){
-	  if(a[i]<=pivotValue){
-			less++;
-	    }	
-	   i++;
-	}	
-	int tmp = a[less-1];
-	a[less-1] = a[pivotIndex];
-	a[pivotIndex] = tmp;	
-    
-	int greater = len-less;
-	i= 0;
-	int offset =0;
-	while(i<len && greater>0){
-		if(a[i]>pivotValue){
-			int tmp = a[i];
-			a[i]= a[less+offset];
-			a[less+offset] = tmp;
-			greater--;
-			offset++;
-			i--;
+	printf("PivotIndex=%d PivotValue=%d\n",pivotIndex,pivotValue);
+	swap(a,pivotIndex,lastIndex);
+	int storeIndex = 0;
+	for(int i =0;i<lastIndex;i++){
+		if(a[i]<=pivotValue){
+			swap(a,storeIndex,i);
+			storeIndex++;
 		}
-        i++;		
-	}	
-	
+	}
+	swap(a,lastIndex,storeIndex);
+	return storeIndex;
 }
 
 
@@ -107,9 +102,7 @@ void quickSort(int *a,int len){
 	if(len<=1){
 		return;
 	}
-	int pivotIndex = (len+1)/2;	
-	printf("PivotIndex=%d PivotValue=%d\n",pivotIndex,a[pivotIndex]);
-	partition(a,pivotIndex,len);	
+	int pivotIndex = partition(a,len-1);	
 	int i=0;  
      while(i<len){    
      printf("%d,",a[i]);
@@ -117,8 +110,22 @@ void quickSort(int *a,int len){
      }
     printf("\n");	 
 	quickSort(a,pivotIndex);
-    quickSort(&a[pivotIndex],len-pivotIndex);        
+    quickSort(&a[pivotIndex+1],len-(pivotIndex+1));        
 }
+
+//********************* Median and Order statistics ************************//
+/*void findKthSmallest(int * a, int len,int k){
+	if(len<=1){
+		return;
+	}
+	int pivotIndex = (len+1)/2;	
+	int pivotValue = a[pivotIndex];
+	partition(
+	
+
+
+
+}*/
 
 void main(void){   
    quickSort(a,size);
