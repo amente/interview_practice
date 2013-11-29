@@ -7,9 +7,15 @@ void main(void){
 	LinkedList *l=LL_linkedList();	
 	int i;
 	for(i=0;i<10;i++){
-	    printf("Added %d\n",i);
-		LL_add(l,i);
-	}	
+	    printf("Appending to the Back %d\n",i);
+		LL_appendBack(l,i);
+	}
+    
+	for(i=0;i<10;i++){
+	    printf("Appending to the Front %d\n",i);
+		LL_appendFront(l,i);
+	}
+	
 	printf("Length: %d\n",LL_length(l));
 	printf("Head: %d\n",l->head->value);
 	printf("Tail: %d\n",l->tail->value);
@@ -22,5 +28,5 @@ void main(void){
 	printf("Remove Tail: %d\n",l->tail->value);
 	LL_remove(l,l->tail->value);
 	printf("Length: %d\n",LL_length(l));
-	LL_destroy(l);
+	LL_destroy(l);	
 }

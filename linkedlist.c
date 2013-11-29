@@ -21,39 +21,53 @@ LinkedList *LL_linkedList(){
     if(!l){exit(0);} //ERROR
 	l->head = NULL;
 	l->tail = NULL;
+	l->length =0;
 	return l;
 }
 
 /* Destroys a LinkedList */
-void LL_destroy(LinkedList *l){
-	printf("Destroying\n");
+void LL_destroy(LinkedList *l){	
 	struct Node *cur = l->head;
 	while(cur!=NULL){
 		struct Node *next = cur->next;		
 		free(cur);
 		cur = next;
 	}
-	free(l);
+	free(l);	
 }
 
 /* Appends a new Node to the end of the LinkedList */
-void LL_add(LinkedList *l,int value){ 
-	struct Node *cur = l->head;
+void LL_appendBack(LinkedList *l,int value){	
 	struct Node *new = (struct Node *)malloc(sizeof(struct Node));
 	if(!new){exit(0);} //ERROR
 	new->next = NULL;
 	new->value = value;	
-	if(cur==NULL){
-	  l->head = new;
-	}else{	
-		while(cur->next!=NULL){
-			cur = cur->next;
-		}		
-		cur->next = new;
+	if(l->length==0){
+		//Empty, head is also new
+		l->head = new;		
+	}else{
+		l->tail->next = new;		
 	}
-	l->tail = new;
+	l->tail = new;	
 	l->length++;	
 }
+
+/* Appends a new Node to the front of the LinkedList */
+void LL_appendFront(LinkedList *l,int value){	
+	struct Node *new = (struct Node *)malloc(sizeof(struct Node));
+	if(!new){exit(0);} //ERROR
+	new->next = NULL;
+	new->value = value;	
+	if(l->length==0){	
+		//Empty tail is also new
+		l->tail = new;
+	}else{
+		new->next = l->head->next;		
+	}
+	l->head = new;
+	l->length++;
+}
+
 
 /* Returns the length of the LinkedList*/
 int LL_length(LinkedList *l){	
@@ -70,7 +84,7 @@ int LL_remove(LinkedList *l,int value){
 				//Removing head
 				l->head=cur->next;				
 			}else if(l->tail==cur){
-				//Removing tail				
+				//Removing tailoh 				
 				l->tail=prev;	
 				prev->next = NULL;				
 			}else{
