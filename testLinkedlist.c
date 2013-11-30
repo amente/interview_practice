@@ -4,7 +4,8 @@
 
 
 void main(void){    
-	LinkedList *l=LL_linkedList();	
+	/**
+	LL *l=LL_LL();	
 	int i;
 	for(i=0;i<10;i++){
 	    printf("Appending to the Back %d\n",i);
@@ -29,4 +30,29 @@ void main(void){
 	LL_remove(l,l->tail->value);
 	printf("Length: %d\n",LL_length(l));
 	LL_destroy(l);	
+	**/
+	
+	//*/
+	LL *l1 = LL_LL();
+	LL *l2 = LL_LL();
+	int i;
+	printf("L1: ");
+	for(i=0;i<10;i+=2){
+	    printf("%d,",i);
+		LL_appendBack(l1,i);
+	}
+	printf("\n");
+	printf("L2: ");
+	for(i=1;i<20;i+=2){
+	    printf("%d,",i);
+		LL_appendBack(l2,i);
+	}
+	printf("\n");	
+	LL * l = LL_merge(l1,l2);
+	printf("L: ");
+	struct Node *cur = l->head;
+	while(cur!=NULL){
+	    printf("%d,",cur->value);
+		cur = cur->next;
+	}	
 }
