@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 /* Representation of a LL Node */
 struct Node{
@@ -18,7 +19,7 @@ typedef struct {
 /* Creates a new LL */
 LL *LL_LL(){    
 	LL *l = malloc(sizeof(LL));	
-    if(!l){exit(0);} //ERROR
+    	assert(l!=NULL);
 	l->head = NULL;
 	l->tail = NULL;
 	l->length =0;
@@ -39,7 +40,7 @@ void LL_destroy(LL *l){
 /* Appends a new Node to the end of the LL */
 void LL_appendBack(LL *l,int value){	
 	struct Node *new = (struct Node *)malloc(sizeof(struct Node));
-	if(!new){exit(0);} //ERROR
+	assert(new!=NULL);
 	new->next = NULL;
 	new->value = value;	
 	if(l->length==0){
@@ -55,7 +56,7 @@ void LL_appendBack(LL *l,int value){
 /* Appends a new Node to the front of the LL */
 void LL_appendFront(LL *l,int value){	
 	struct Node *new = (struct Node *)malloc(sizeof(struct Node));
-	if(!new){exit(0);} //ERROR
+	assert(new!=NULL);
 	new->next = NULL;
 	new->value = value;	
 	if(l->length==0){	

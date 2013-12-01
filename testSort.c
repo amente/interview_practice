@@ -4,7 +4,7 @@
 int size = 10;
 int a[10] = {4,5,6,8,11,9,3,4,5,6};
 
-void main(void){   
+int main(void){   
    
    /*int * r = mergeSort(a,size);
    int i=0;  
@@ -24,5 +24,5 @@ void main(void){
    int r = findMedian(a,size);
    printf("%d,",r);
    
-      
+   return 0; 
 }

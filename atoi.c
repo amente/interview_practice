@@ -26,8 +26,8 @@ int atoi(char *s,int len){
      return 0x00;
 }
 
-void main(void){
+int main(void){
    
   printf("%d",atoi(a,6));
-
+  return 0;
 }

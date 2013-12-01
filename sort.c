@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 int * merge(int *a1,int len1,int *a2,int len2);
 int * mergeSort(int *a,int len);
@@ -30,11 +31,7 @@ void swap(int *a,int i1,int i2){
 int * merge(int *a1,int len1,int *a2,int len2){
    int * merged;
    merged = (int *) malloc((len1+len2)*sizeof(int));
-   if(merged == NULL){
-     printf("Memory allocation failed\n");
-     exit(0);
-   }
-   
+   assert(merged!=NULL);   
    int i1 =0;
    int i2 =0;
    int i = 0;

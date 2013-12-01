@@ -3,7 +3,7 @@
 
 
 
-void main(void){    
+int main(void){    
 	/**
 	LL *l=LL_LL();	
 	int i;
@@ -54,5 +54,8 @@ void main(void){
 	while(cur!=NULL){
 	    printf("%d,",cur->value);
 		cur = cur->next;
-	}	
+	}
+
+	return 0;	
 }
+
