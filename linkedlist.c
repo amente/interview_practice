@@ -2,17 +2,31 @@
 #include <stdlib.h>
 #include <assert.h>
 
+
+
 /* Representation of a LL Node */
 struct Node{
 	struct Node *next;
 	int value;
 };
 
+
+void LL_destroy(void *self);
+void LL_appendBack(void *self,int value);
+void LL_appendFront(void *self,int value);
+int LL_remove(void *self,int value);
+int LL_removeHead(void *self);
+
 /* Representation of a LL */
 typedef struct {
 	struct Node *head;	
 	struct Node *tail;
 	int length;
+	void (*destroy)(void *self);	
+	void (*appendBack) (void *self,int value);
+	void (*appendFront) (void *self,int value);
+	int (*remove) (void *self,int value);
+	int (*removeHead) (void *self);
 }LL;
 
 
@@ -23,11 +37,17 @@ LL *LL_LL(){
 	l->head = NULL;
 	l->tail = NULL;
 	l->length =0;
+	l->destroy = LL_destroy;
+	l->appendBack = LL_appendBack;
+	l->appendFront = LL_appendFront;
+	l->remove = LL_remove;
+	l->removeHead = LL_removeHead;
 	return l;
 }
 
 /* Destroys a LL */
-void LL_destroy(LL *l){	
+void LL_destroy(void *self){	
+    LL *l = self;
 	struct Node *cur = l->head;
 	while(cur!=NULL){
 		struct Node *next = cur->next;		
@@ -38,7 +58,8 @@ void LL_destroy(LL *l){
 }
 
 /* Appends a new Node to the end of the LL */
-void LL_appendBack(LL *l,int value){	
+void LL_appendBack(void *self,int value){
+    LL *l = self;	
 	struct Node *new = (struct Node *)malloc(sizeof(struct Node));
 	assert(new!=NULL);
 	new->next = NULL;
@@ -54,7 +75,8 @@ void LL_appendBack(LL *l,int value){
 }
 
 /* Appends a new Node to the front of the LL */
-void LL_appendFront(LL *l,int value){	
+void LL_appendFront(void *self,int value){	
+	LL *l = self;
 	struct Node *new = (struct Node *)malloc(sizeof(struct Node));
 	assert(new!=NULL);
 	new->next = NULL;
@@ -76,7 +98,8 @@ int LL_length(LL *l){
 }
 
 /* Removes the first occurence of a value from a LL */
-int LL_remove(LL *l,int value){
+int LL_remove(void *self,int value){
+	LL *l = self;
 	struct Node *cur = l->head;
 	struct Node *prev = NULL;
 	while(cur!=NULL){	
@@ -103,8 +126,9 @@ int LL_remove(LL *l,int value){
 	return 0;
 }
 
-int LL_removeHead(LL *l){
+int LL_removeHead(void *self){
 	// Safely assume LL_remove removes the first occurence
+	LL *l = self;
 	int value = l->head->value;
 	LL_remove(l,value);
 	return value;

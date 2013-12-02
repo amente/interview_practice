@@ -4,35 +4,36 @@
 
 
 int main(void){    
-	/**
+	
 	LL *l=LL_LL();	
 	int i;
 	for(i=0;i<10;i++){
 	    printf("Appending to the Back %d\n",i);
-		LL_appendBack(l,i);
+		l->appendBack(l,i);
 	}
     
 	for(i=0;i<10;i++){
 	    printf("Appending to the Front %d\n",i);
-		LL_appendFront(l,i);
+		l->appendFront(l,i);
 	}
 	
-	printf("Length: %d\n",LL_length(l));
+	printf("Length: %d\n",l->length);
 	printf("Head: %d\n",l->head->value);
 	printf("Tail: %d\n",l->tail->value);
 	printf("Remove: %d\n",5);
-	LL_remove(l,5);
-	printf("Length: %d\n",LL_length(l));
+	l->remove(l,5);
+	printf("Length: %d\n",l->length);
 	printf("Remove Head: %d\n",l->head->value);
-	LL_remove(l,l->head->value);
-	printf("Length: %d\n",LL_length(l));
+	l->remove(l,l->head->value);
+	printf("Length: %d\n",l->length);
 	printf("Remove Tail: %d\n",l->tail->value);
-	LL_remove(l,l->tail->value);
-	printf("Length: %d\n",LL_length(l));
-	LL_destroy(l);	
-	**/
+	l->remove(l,l->tail->value);
+	printf("Length: %d\n",l->length);
+	l->destroy(l);	
+	
 	
 	//*/
+	/*
 	LL *l1 = LL_LL();
 	LL *l2 = LL_LL();
 	int i;
@@ -55,7 +56,7 @@ int main(void){
 	    printf("%d,",cur->value);
 		cur = cur->next;
 	}
-
+	*/
 	return 0;	
 }
 
