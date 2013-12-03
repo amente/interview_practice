@@ -20,7 +20,7 @@ typedef struct _BSTree{
 // Prototypes
 void BSTree_add(BSTree *t,int value);
 void BSTree_destroy(BSTree *t);
-void BSTree_insert(TreeNode **root,int value);
+void BSTree_insert(TreeNode **root,int value,TreeNode **parent);
 void TreeNode_destroy(TreeNode **n);
 
 // Creates a Binary Search Tree
@@ -35,7 +35,7 @@ BSTree *BSTree_BSTree(){
 // Adds a value to the binary search tree
 void BSTree_add(BSTree *t,int value){	
 	assert(t!=NULL);	
-	BSTree_insert(&(t->root),value);	
+	BSTree_insert(&(t->root),value,NULL);	
 }
 
 // Destroys the tree
@@ -55,15 +55,15 @@ void TreeNode_destroy(TreeNode **n){
 }
 
 // Inserts a node to a tree starting from node n 
-void  BSTree_insert(TreeNode **n,int value){	
+void  BSTree_insert(TreeNode **n,int value,TreeNode **parent){	
 	if(*n==NULL){
 		*n = malloc(sizeof(TreeNode));		
 		assert((*n)!=NULL);
 		(*n)->value = value;
-		printf("Value in tree %d\n",(*n)->value);
+		(*n)->parent = (parent!=NULL)?(*parent):NULL;
 		return;
-	}
-	((*n)->value >value)?BSTree_insert(&((*n)->left),value):BSTree_insert(&((*n)->right),value);
+	}	
+	((*n)->value >value)?BSTree_insert(&((*n)->left),value,n):BSTree_insert(&((*n)->right),value,n);
 }
 
 // Preorder traversal
@@ -89,4 +89,8 @@ void BSTree_postOrder(TreeNode **n, void (*callback)(int)){
 	BSTree_postOrder(&((*n)->right),callback);
 	callback((*n)->value);
 }
+
+
+
+
 
