@@ -19,6 +19,8 @@ int main(void){
 	printf("Get: %s Result: %d \n","two",h->get(h,"two",3));
 	printf("Get: %s Result: %d \n","one",h->get(h,"one",3));
 	
+	printf("Exists: %s  %s\n","two",h->exists(h,"two",3)?"YES":"NO");
+	printf("Exists: %s  %s\n","zero",h->exists(h,"zero",4)?"YES":"NO");
 	
 	
 	

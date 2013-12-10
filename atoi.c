@@ -26,8 +26,58 @@ int atoi(char *s,int len){
      return 0x00;
 }
 
+/**
 int main(void){
    
   printf("%d",atoi(a,6));
   return 0;
+}*/
+
+
+int isSubstr(char *str,char *find){
+	if(*str=='\0' || *find=='\0'){
+		return 0;
+	}
+	int i,j,foundNonMatch;	
+	for(i=0;str[i]!='\0';i++){
+		foundNonMatch = 0;
+		for(j=0;find[j]!='\0';j++){
+			if(str[i+j]!=find[j]){
+				foundNonMatch =1;
+				break;
+			}
+		}
+		if(!foundNonMatch)
+			return 1;			
+	}
+	return 0;
 }
+
+void swap(char *a1,char *a2){
+	if(a1==a2)return;	
+	char tmp = *a1;
+	*a1 = *a2;
+	*a2 = tmp;
+}
+
+
+void reverseArray(char *begin,char *end){	
+	while(begin<end){
+		swap(begin,end);
+		begin++;
+		end--;
+	}
+}
+// Rotate an array by k units to the left in place
+void rotateArray(char *a,int len,int k){
+	reverseArray(a,a+k-1);
+	reverseArray(a+k,a+len-1);
+	reverseArray(a,a+len-1);	
+}
+
+
+
+
+
+
+

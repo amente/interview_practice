@@ -73,7 +73,7 @@ int * mergeSort(int *a,int len){
      if(len <=1){
        return a;
      }     
-     int middle = (len+1)/2;
+     int middle = (len+1)/2; // (len-1)/2+1
      int * firstHalf = mergeSort(a,middle);
      int * secondHalf = mergeSort(&a[middle],len-middle);
      return merge(firstHalf,middle,secondHalf,len-middle);
@@ -102,13 +102,7 @@ void quickSort(int *a,int len){
 	if(len<=1){
 		return;
 	}
-	int pivotIndex = partition(a,len-1);	
-	int i=0;  
-     while(i<len){    
-     printf("%d,",a[i]);
-     i++;
-     }
-    printf("\n");	 
+	int pivotIndex = partition(a,len-1);		 
 	quickSort(a,pivotIndex);
     quickSort(&a[pivotIndex+1],len-(pivotIndex+1));        
 }
